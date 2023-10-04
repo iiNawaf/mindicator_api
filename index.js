@@ -25,9 +25,13 @@ app.use('/moods', require('./routes/moods/create_mood'));
 app.use('/moods', require('./routes/moods/get_current_mood'));
 app.use('/moods', require('./routes/moods/get_mood_history'));
 app.use('/moods', require('./routes/moods/mood_during_day'));
+app.use('/moods', require('./routes/moods/update_mood_profile'));
 
 // Recommendations Routes
 app.use('/recommendations', require('./routes/recommendations/get_user_recommendations'));
+
+// Health Data Routes
+app.use('/health', require('./routes/health_data/store_health_data'));
 
 
 //Listen

@@ -7,7 +7,7 @@ router.get('/mood_history/:uid', async (req, res) => {
         const userId = parseInt(req.params.uid);
 
         const moodHistory = await pool.query(
-            "SELECT * FROM moods WHERE user_id=$1 ORDER BY time DESC",
+            "SELECT (time AT TIME ZONE 'UTC') AS time_utc, * FROM moods WHERE user_id=$1 ORDER BY time DESC",
             [userId]
         );
 
