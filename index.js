@@ -34,6 +34,7 @@ app.use("/moods", require("./routes/moods/update_mood_profile"));
 // Recommendations Routes
 app.use("/recommendations", require("./routes/recommendations/create_recommendation"));
 app.use("/recommendations", require("./routes/recommendations/get_user_recommendations"));
+app.use("/recommendations", require("./routes/recommendations/update_recommendation"));
 
 // Health Data Routes
 app.use("/health", require("./routes/health_data/store_health_data"));

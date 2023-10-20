@@ -16,19 +16,24 @@ router.post("/create", async (req, res) => {
 
     if (moodScore <= 4) {
       const recommendationList = await pool.query(
-        "SELECT * FROM recommendation_list WHERE mood_type = 'BAD' ORDER BY RANDOM() LIMIT 3"
+        "SELECT * FROM recommendation_list WHERE mood_type = 'BAD' ORDER BY RANDOM() LIMIT 1"
       );
       recommendations = recommendationList.rows;
     } else if (moodScore <= 9) {
       const recommendationList = await pool.query(
-        "SELECT * FROM recommendation_list WHERE mood_type = 'GOOD' ORDER BY RANDOM() LIMIT 3"
+        "SELECT * FROM recommendation_list WHERE mood_type = 'GOOD' ORDER BY RANDOM() LIMIT 1"
       );
       recommendations = recommendationList.rows;
     }
     // End filteration
 
+    // Check if there is a recommendation with no status
+    const activeRecommendations = await pool.query(
+      "SELECT COUNT(*) FROM recommendations WHERE status IS NULL"
+    );
+
     // Create the recommendation
-    if (recommendations.length !== 0) {
+    if (recommendations.length !== 0 && activeRecommendations.rows[0].count === '0') {
       // Loop and insert into recommendations
       for (var i = 0; i < recommendations.length; i++) {
         await pool.query(
@@ -42,7 +47,7 @@ router.post("/create", async (req, res) => {
       });
     } else {
       return res.status(401).send({
-        message: "There is no recommendation to add.",
+        message: "It is not possible to create the recommendation",
       });
     }
   } catch (error) {

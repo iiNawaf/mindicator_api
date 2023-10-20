@@ -14,7 +14,7 @@ router.post("/store", async (req, res) => {
   // Insert
   const healthData = await pool.query(
     "INSERT INTO health_data (user_id, hrv, steps, sleep_time_in_minutes, mood_score, time) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
-    [userId, steps, hrv, sleep, moodScore, formattedDate]
+    [userId, hrv, steps, sleep, moodScore, formattedDate]
   );
 
   return res.status(201).send({
