@@ -33,7 +33,7 @@ router.post("/create", async (req, res) => {
     );
 
     // Create the recommendation
-    if (recommendations.length !== 0 && activeRecommendations.rows[0].count === '0') {
+    if (recommendations.length !== 0 || activeRecommendations.rows[0].count === '0') {
       // Loop and insert into recommendations
       for (var i = 0; i < recommendations.length; i++) {
         await pool.query(

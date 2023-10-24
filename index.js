@@ -2,14 +2,11 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const morgan = require("morgan");
-const fetch = require("node-fetch");
-const admin = require("firebase-admin");
-const serviceAccount = require("./mindicatorapp-6df6a-firebase-adminsdk-y85rk-334b998653.json");
-const cron = require("node-cron");
+const firebaseInit = require("./services/firebase");
+const moodNotification = require("./cron/mood_notification");
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
+// Initialize Firebase
+firebaseInit();
 
 //Middlewares
 app.use(express.json());
@@ -23,6 +20,7 @@ app.use("/users", require("./routes/users/sign_up"));
 app.use("/users", require("./routes/users/login"));
 app.use("/users", require("./routes/users/update_user"));
 app.use("/users", require("./routes/users/reset_password"));
+app.use("/users", require("./routes/users/update_fcm_token"));
 
 // Moods Routes
 app.use("/moods", require("./routes/moods/create_mood"));
@@ -51,37 +49,8 @@ app.use("/health", require("./routes/health_data/store_health_data"));
 // Notifications Routes
 app.use("/notifications", require("./routes/notifications/send_notification"));
 
-// Schedule notifications
-const body = {
-  fcmToken:
-    "dproAfuKlUbFkEH4MzBqbF:APA91bHDClmlxlfhwvfbHacZkNYJpwM7QhmbI-TjwyHehjfFQau45lsgK5HqXgoi4Wmhi8a3ULTVeWAye9SyQ_bpVOd7Dim1aSmhSYohamDNeHngCKvW-rZTIns14MKiuVI91TjJRCMh",
-  title: "Check your mood!",
-  body: "Enter the app to see how you feel at the moment.",
-};
-
-// Define the schedule using cron syntax
-const schedule = "0 0,6,12,18 * * *";
-
-// Define the task you want to repeat
-const task = async () => {
-  // This function will be executed at the specified times
-  console.log("Task executed at:", new Date());
-  try {
-    const response = await fetch("http://localhost:8000/notifications/send", {
-    method: "post",
-    body: JSON.stringify(body),
-    headers: { "Content-Type": "application/json" },
-  });
-  const data = await response.json();
-
-  console.log(data);
-  } catch (error) {
-    console.log("Error:", error);
-  }
-};
-
-// Schedule the task
-cron.schedule(schedule, task);
+// Schedule mood reminder notifications
+moodNotification
 
 //Listen
 app.listen(8000, () => console.log("Listening to port 8000..."));

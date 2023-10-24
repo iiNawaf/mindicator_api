@@ -11,6 +11,19 @@ router.post("/send", async (req, res) => {
         title: title,
         body: body,
       },
+      android: {
+        notification: {
+          sound: 'default', // Use 'default' for the default notification sound
+          priority: 'high' // Set notification priority to high
+        }
+      },
+      apns: {
+        payload: {
+          aps: {
+            sound: 'default' // Use 'default' for the default notification sound
+          }
+        }
+      },
       token: fcmToken,
     };
 

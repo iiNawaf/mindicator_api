@@ -2,14 +2,14 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../../db");
 
-router.put("/update/:uid", async (req, res) => {
+router.put("/fcmToken/:uid", async (req, res) => {
   try {
     const userId = parseInt(req.params.uid);
-    const { name, phone, dateOfBirth } = req.body;
+    const { fcmToken } = req.body;
 
     const updatedUser = await pool.query(
-        "UPDATE users SET name = $1, phone = $2, date_of_birth = $3 WHERE user_id = $4 RETURNING *",
-        [name, phone, dateOfBirth, userId]
+        "UPDATE users SET fcm_token = $1 WHERE user_id = $2 RETURNING *",
+        [fcmToken, userId]
       );
       return res.status(201).send({
         message: "successfully updated",
