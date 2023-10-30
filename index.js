@@ -15,6 +15,8 @@ app.use(morgan("dev"));
 
 //Routes
 
+app.get('/', (req, res) => res.send("Hello There!"));
+
 // Users Routes
 app.use("/users", require("./routes/users/sign_up"));
 app.use("/users", require("./routes/users/login"));
