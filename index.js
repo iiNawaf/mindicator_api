@@ -49,6 +49,11 @@ app.use("/health", require("./routes/health_data/store_health_data"));
 // Notifications Routes
 app.use("/notifications", require("./routes/notifications/send_notification"));
 
+// Question Routes
+app.use("/questions",require("./routes/questions/update_answer"));
+app.use("/questions",require("./routes/questions/store_user_questions"));
+app.use("/questions",require("./routes/questions/get_user_questions"));
+
 // Schedule mood reminder notifications
 moodNotification
 
