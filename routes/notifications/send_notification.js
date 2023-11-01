@@ -35,10 +35,10 @@ router.post("/send", async (req, res) => {
     };
 
     const response = await getMessaging().sendEachForMulticast(message);
-    console.log("Successfully sent message:", response);
     res.status(201).send({
       message: "Notification successfully sent!",
-      response: response,
+      successCount: response.successCount,
+      failureCount: response.failureCount
     });
   } catch (error) {
     console.error("Error sending message:", error);

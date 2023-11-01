@@ -2,8 +2,6 @@ const fetch = require("node-fetch");
 const cron = require("node-cron");
 
 const body = {
-  fcmToken:
-    "dproAfuKlUbFkEH4MzBqbF:APA91bHDClmlxlfhwvfbHacZkNYJpwM7QhmbI-TjwyHehjfFQau45lsgK5HqXgoi4Wmhi8a3ULTVeWAye9SyQ_bpVOd7Dim1aSmhSYohamDNeHngCKvW-rZTIns14MKiuVI91TjJRCMh",
   title: "Check Your Mood!",
   body: "Enter the app to see how you feel at the moment.",
 };
