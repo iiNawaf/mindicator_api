@@ -24,8 +24,10 @@ router.get("/get/:uid", async (req, res) => {
         recommendations: recommendations.rows
     });
   } catch (error) {
+    console.log(error);
     return res.status(400).send({
       message: "An error occurred while getting user recommendations",
+      error: error
     });
   }
 });

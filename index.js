@@ -15,7 +15,7 @@ app.use(morgan("dev"));
 
 //Routes
 
-app.get('/', (req, res) => res.send("Hello There!"));
+app.get('/test', (req, res) => res.send("Hello There!"));
 
 // Users Routes
 app.use("/users", require("./routes/users/sign_up"));
@@ -61,3 +61,4 @@ moodNotification
 
 //Listen
 app.listen(8000, () => console.log("Listening to port 8000..."));
+
