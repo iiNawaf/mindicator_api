@@ -11,8 +11,6 @@ router.get("/mood_today/:uid", async (req, res) => {
       [userId]
     );
 
-    console.log(moodToday.rows);
-
     if (moodToday.rows.length === 0) {
       return res.status(401).send({
         message: "No moods found!",
